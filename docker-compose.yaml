@@ -1,0 +1,21 @@
+services:
+  llm_ocr:
+    image: llm_ocr:latest
+    container_name: card_reader
+    ports:
+      - "9999:9999"  # Ensure this is mapped to the correct port in the Python script
+    volumes:
+      - ./Code/llm_ocr/:/app/
+    environment:
+        - TZ=Asia/Calcutta
+    privileged: true
+    # deploy:
+    #     resources:
+    #       reservations:
+    #         devices:
+    #           - capabilities:
+    #               - gpu
+    working_dir: /app/
+    restart: always
+    shm_size: '50g'
+    command: ["python", "app.py"]
